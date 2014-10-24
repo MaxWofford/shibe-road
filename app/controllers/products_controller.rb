@@ -7,9 +7,10 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
-  # GET /products/1
-  # GET /products/1.json
+  # GET /products/cqPX
+  # GET /products/cqPX.json
   def show
+    @product = Product.where(token: params[:token]).first
   end
 
   # GET /products/new
@@ -17,8 +18,9 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
-  # GET /products/1/edit
+  # GET /products/cqPX/edit
   def edit
+    @product = Product.where(token: params[:token]).first
   end
 
   # POST /products
@@ -28,8 +30,9 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
+        redirect_to "/products/#{@product.token}", notice: 'Product was successfully created.'
+        # format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        # format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -37,22 +40,24 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
+  # PATCH/PUT /products/cqPX
+  # PATCH/PUT /products/cqPX.json
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+    @product = Product.where(id: params[:token]).first
+    redirect_to "/products/#{@product.token}", notice: 'Product was successfully created.'
+    # respond_to do |format|
+    #   if @product.update(product_params)
+    #     # format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+    #     # format.json { render :show, status: :ok, location: @product }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @product.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
+  # DELETE /products/cqPX
+  # DELETE /products/cqPX.json
   def destroy
     @product.destroy
     respond_to do |format|
@@ -64,7 +69,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.where(token: params[:token]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

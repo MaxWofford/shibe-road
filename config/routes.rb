@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
   root 'products#new'
+  # Static page routes
+  get 'legal' => 'static_pages#legal', as: :legal
+  # Products routes
+  get '/products(.:format)' => 'products#index', as: :products
+  post '/products(.:format)' => 'products#create'
+  get '/products/new(.:format)' => 'products#new', as: :new_product
+  get '/products/:token/edit(.:format)' => 'products#edit', as: :edit_product
+  get '/products/:token(.:format)' => 'products#show', as: :product
+  patch '/products/:token(.:format)' => 'products#update'
+  put '/products/:token(.:format)' => 'products#update'
+  delete '/products/:token(.:format)' => 'products#destroy'
 
-  get 'legal' => 'static_pages#legal'
-
-  resources :products
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
