@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  root 'products#new'
+
+  get 'legal' => 'static_pages#legal'
+
   resources :products
 
-  root 'products#new'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # The priority is based upon order of creation: first created -> highest priority.

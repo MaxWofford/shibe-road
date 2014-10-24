@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise'
 # Admin dashboard
 gem 'activeadmin', github: 'activeadmin'
+# Foundation by zurb
+gem 'foundation-rails'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'
